@@ -1,0 +1,7 @@
+import('mnormt')
+useDynLib(qfabs, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+
+export(mqfabs)
+export(qfabs)
+export(generator)

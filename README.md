@@ -47,7 +47,7 @@ qfabs uses coordinate descent with a fixed step size which consists of both forw
 Integrative analysis of regional differences in elder support with high-dimensional quantile regression. Manuscript.
 
 # Development
-The R-package is developed by Panpan Ren (ren08067146@163.com), Xingjie Shi, Xu Liu and Peng Zhan.
+The R-package is developed by Panpan Ren (ren08067146@163.com), Xu Liu, Xiao Zhang, Peng Zhan and Tingting Qiu.
 
 
 

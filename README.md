@@ -27,9 +27,9 @@ qfabs uses coordinate descent with a fixed step size which consists of both forw
     beta = matrix(0, p, M)
     index1 = 1:10
     index2 = 2:11
-    beta[index1, 1] = ruinf(10, 0.2, 1.0)
+    beta[index1, 1] = runif(10, 0.2, 1.0)
     beta[index2, 2] = runif(10, 0.4, 1.4)
-    distr = "norm"
+    distr = "gaussian"
     rho = 0.5
 
     dat = generator(n, p, beta, distr, rho)

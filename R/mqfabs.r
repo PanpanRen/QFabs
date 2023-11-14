@@ -56,7 +56,7 @@ mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0
     n_alter = rep(NA, M)
     n_alter[1] = n[1]
     for(m in 1:(M-1)){
-        n_alter[m+1] = n[m]+n[m+1]
+        n_alter[m+1] = n_alter[m]+n[m+1]
     }
 
     if(is.null(Lambda2)){

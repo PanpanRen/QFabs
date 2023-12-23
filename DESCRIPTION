@@ -3,8 +3,6 @@ Type: Package
 Title: qfabs
 Version: 0.0.1
 Authors@R: c(person(given = "Panpan", family = "Ren", role = c("aut", "cre"), email = "ren08067146@163.com"), person(given = "Xu", family = "Liu", role = c("aut")), person(given = "Xiao", family = "Zhang", role = c("aut")), person(given = "Peng", family = "Zhan", role = c("aut")), person(given = "Tingting", family = "Qiu", role = c("aut")))
-Author: Panpan Ren [aut,cre], Xu Liu [aut], Xiao Zhang [aut], Peng Zhan [aut], Tingting Qiu [aut]
-Maintainer: Panpan Ren <ren08067146@163.com>
 Description: High-dimensional quantile regression estimation with the regression coefficients difference shrinkage. The contrast penalty is to consider the similarity among the regression coefficients. The Lasso is used to yield a sparse estimator.
 License: GPL (>=2)
 Imports: mnormt

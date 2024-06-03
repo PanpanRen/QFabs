@@ -4,7 +4,7 @@
 \alias{qfabs}
 \title{A minorization-maximization forward and backward stagewise algorithm for high-dimensional quantile regression.}
 \usage{
-    qfabs(y, x, tau = 0.5, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000)
+    qfabs(y, x, tau = 0.5, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1)
 }
 \arguments{
     \item{y}{The response, a numeric vector.}
@@ -14,6 +14,7 @@
     \item{delta}{A constant in pertubed loss function. Default is 1e-8.}
     \item{xi}{The threshold for qfabs. Default is 1e-10.}
     \item{max.iter}{The maximum number of outer-loop iterations allowed. Default is 5000.}
+    \item{gamma}{A tuning parameter in EBIC. Default is 1.}
 }
 \value{
 A list.

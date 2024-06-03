@@ -10,6 +10,7 @@
 #' @param delta A constant in pertubed loss function. Default is 1e-8.
 #' @param xi The threshold for mqfabs. Default is 1e-10.
 #' @param max.iter The maximum number of outer-loop iterations allowed. Default is 5000.
+#' @param gamma A tuning parameter in EBIC. Default is 1.
 #'
 #' @return A list.
 #' \itemize{
@@ -48,7 +49,7 @@
 #' n = data_logistic$n
 #' fit <- mqfabs(y, x, n)
         
-mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000){
+mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1){
     M = length(n)
     p = ncol(x)
     x = cbind(1, x)
@@ -90,7 +91,8 @@ mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0
                 as.numeric(epsilon), 
                 as.numeric(delta), 
                 as.numeric(xi), 
-                as.integer(max.iter))
+                as.integer(max.iter),
+                as.numeric(gamma))
         iter = fit$iter
         fit$opt = which.min(fit$bic[1:(iter+1)])
 
@@ -116,7 +118,8 @@ mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0
                     as.numeric(epsilon), 
                     as.numeric(delta), 
                     as.numeric(xi), 
-                    as.integer(max.iter))
+                    as.integer(max.iter),
+                    as.numeric(gamma))
             Bic = fit$bic
             iter = fit$iter
             bic = min(Bic[1:(iter+1)])
@@ -135,7 +138,8 @@ mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0
                     as.numeric(epsilon), 
                     as.numeric(delta), 
                     as.numeric(xi), 
-                    as.integer(max.iter))
+                    as.integer(max.iter),
+                    as.numeric(gamma))
         iter = result1$iter
         result1$opt = which.min(result1$bic[1:(iter+1)])
 

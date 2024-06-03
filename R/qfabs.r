@@ -7,6 +7,7 @@
 #' @param delta A constant in pertubed loss function. Default is 1e-8.
 #' @param xi The threshold for qfabs. Default is 1e-10.
 #' @param max.iter The maximum number of outer-loop iterations allowed. Default is 5000.
+#' @param gamma A tuning parameter in EBIC. Default is 1.
 #'
 #' @return A list.
 #' \itemize{
@@ -33,7 +34,7 @@
 #' tau = 0.2
 #' fit <- qfabs(y, x, tau)
         
-qfabs = function(y, x, tau = 0.5, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000){
+qfabs = function(y, x, tau = 0.5, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1){
     p = ncol(x)
     x = cbind(1, x)
     n = length(y)
@@ -49,7 +50,8 @@ qfabs = function(y, x, tau = 0.5, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.
             as.numeric(epsilon),
             as.numeric(delta),
             as.numeric(xi),
-            as.integer(max.iter))
+            as.integer(max.iter),
+            as.numeric(gamma))
     iter = fit$iter
     fit$opt = which.min(fit$bic[1:(iter+1)])
 

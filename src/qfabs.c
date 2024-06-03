@@ -177,7 +177,7 @@ void der(double *x, double *sdx, int *n, int M, int p, double q, double lambda2,
     free(r1);
 }
 
-int estimate(double *y, double *x, double *sdx, int *active, int *n, int M, int p, double q, double lambda2, double epsilon, double delta, double xi, int max_iter, double *vbic, double *lambda1, double *betahat){
+int estimate(double *y, double *x, double *sdx, int *active, int *n, int M, int p, double q, double lambda2, double epsilon, double delta, double xi, int max_iter, double gamma, double *vbic, double *lambda1, double *betahat){
     int m, P=M*p, N=n[M-1], *num, j, row, column, count, i, nm, location,k, number, c, l, tmp1, tmp3, tmp5;
     double *r1, *derivative, *r2, loss1, value, *x_j, loss2, bic, temp, temp1, tmp, tmp2, tmp4, dactive;
     r1 = (double*)malloc(sizeof(double) *N);
@@ -252,7 +252,7 @@ int estimate(double *y, double *x, double *sdx, int *active, int *n, int M, int 
         tmp1 = n[m];
         tmp3 = num[m];
         nm = tmp1 - tmp5;
-        bic = bic + 2*nm*_loss1(tmp5, tmp1, q, r2) + tmp3*log(nm) + 2.0*lchoose(p-1, tmp3);
+        bic = bic + 2*nm*_loss1(tmp5, tmp1, q, r2) + tmp3*log(nm) + 2.0*gamma*lchoose(p-1, tmp3);
     }
     temp = bic;
     location = 0;
@@ -432,7 +432,7 @@ int estimate(double *y, double *x, double *sdx, int *active, int *n, int M, int 
             tmp3 = n[m];
             tmp5 = num[m];
             nm = tmp3 - tmp1;
-            bic = bic + 2*nm*_loss1(tmp1, tmp3, q, r2) + tmp5*log(nm) + 2.0*lchoose(p-1, tmp5);
+            bic = bic + 2*nm*_loss1(tmp1, tmp3, q, r2) + tmp5*log(nm) + 2.0*gamma*lchoose(p-1, tmp5);
         }
         // printf("%lf\n",bic);
         // printf("%d\n",num[M-1]);
@@ -464,7 +464,7 @@ int estimate(double *y, double *x, double *sdx, int *active, int *n, int M, int 
     return(k);
 }
 
-int estimate1(double *y, double *x, double *sdx, int *active, int *n, int M, int p, double q, double lambda2, double epsilon, double delta, double xi, int max_iter, double *vbic, double *lambda1, double *betahat){
+int estimate1(double *y, double *x, double *sdx, int *active, int *n, int M, int p, double q, double lambda2, double epsilon, double delta, double xi, int max_iter, double gamma, double *vbic, double *lambda1, double *betahat){
     int m, P=M*p, N=n[M-1], *num, j, row, column, count, i, nm, location,k, number, c, l, tmp1, tmp3, tmp5;
     double *r1, *derivative, *r2, *betahat1, loss1, value, *x_j, loss2, bic, temp, temp1, tmp, tmp2, tmp4, dactive, *betahat1_j;
     r1 = (double*)malloc(sizeof(double) *N);
@@ -540,7 +540,7 @@ int estimate1(double *y, double *x, double *sdx, int *active, int *n, int M, int
         tmp1 = n[m];
         tmp3 = num[m];
         nm = tmp1 - tmp5;
-        bic = bic + 2*nm*_loss1(tmp5, tmp1, q, r2) + tmp3*log(nm) + 2.0*lchoose(p-1, tmp3);
+        bic = bic + 2*nm*_loss1(tmp5, tmp1, q, r2) + tmp3*log(nm) + 2.0*gamma*lchoose(p-1, tmp3);
     }
     temp = bic;
     location = 0;
@@ -720,7 +720,7 @@ int estimate1(double *y, double *x, double *sdx, int *active, int *n, int M, int
             tmp3 = n[m];
             tmp5 = num[m];
             nm = tmp3 - tmp1;
-            bic = bic + 2*nm*_loss1(tmp1, tmp3, q, r2) + tmp5*log(nm) + 2.0*lchoose(p-1, tmp5);
+            bic = bic + 2*nm*_loss1(tmp1, tmp3, q, r2) + tmp5*log(nm) + 2.0*gamma*lchoose(p-1, tmp5);
         }
         // printf("%lf\n",bic);
         // printf("%d\n",num[M-1]);
@@ -753,7 +753,7 @@ int estimate1(double *y, double *x, double *sdx, int *active, int *n, int M, int
     return(k);
 }
 
-SEXP _ESTIMATE(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEXP EPSILON, SEXP DELTA, SEXP XI, SEXP MAX_ITER){
+SEXP _ESTIMATE(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEXP EPSILON, SEXP DELTA, SEXP XI, SEXP MAX_ITER, SEXP GAMMA){
     int p = INTEGER(P)[0],i, m=INTEGER(M)[0], dimension = m*p;
     int max_iter = INTEGER(MAX_ITER)[0], iter, *active;
     double *sdx;
@@ -780,7 +780,7 @@ SEXP _ESTIMATE(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEX
     for(i = 0; i < 3; ++i) SET_STRING_ELT(R_names, i,  mkChar(names[i]));
     // printf("%d\n",m);
     
-    iter = estimate(REAL(Y), REAL(X), sdx, active, INTEGER(N), INTEGER(M)[0], p, REAL(Q)[0], REAL(LAMBDA2)[0], REAL(EPSILON)[0], REAL(DELTA)[0], REAL(XI)[0], max_iter, REAL(BIC), REAL(LAMBDA), REAL(BETAHAT));
+    iter = estimate(REAL(Y), REAL(X), sdx, active, INTEGER(N), INTEGER(M)[0], p, REAL(Q)[0], REAL(LAMBDA2)[0], REAL(EPSILON)[0], REAL(DELTA)[0], REAL(XI)[0], max_iter, REAL(GAMMA)[0], REAL(BIC), REAL(LAMBDA), REAL(BETAHAT));
     // printf("%d\n",iter);
     INTEGER(Iter)[0] = iter;
     // SET_VECTOR_ELT(Result, 0, LAMBDA);
@@ -798,7 +798,7 @@ SEXP _ESTIMATE(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEX
     return Result;
 }
 
-SEXP ESTIMATE_1(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEXP EPSILON, SEXP DELTA, SEXP XI, SEXP MAX_ITER){
+SEXP ESTIMATE_1(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SEXP EPSILON, SEXP DELTA, SEXP XI, SEXP MAX_ITER, SEXP GAMMA){
     int p = INTEGER(P)[0],i, m=INTEGER(M)[0], dimension = m*p;
     int max_iter = INTEGER(MAX_ITER)[0], iter, *active;
     double *sdx;
@@ -824,7 +824,7 @@ SEXP ESTIMATE_1(SEXP Y, SEXP X, SEXP N, SEXP M, SEXP P, SEXP Q, SEXP LAMBDA2, SE
     
     for(i = 0; i < 4; ++i) SET_STRING_ELT(R_names, i,  mkChar(names[i]));
     
-    iter = estimate1(REAL(Y), REAL(X), sdx, active, INTEGER(N), INTEGER(M)[0], p, REAL(Q)[0], REAL(LAMBDA2)[0], REAL(EPSILON)[0], REAL(DELTA)[0], REAL(XI)[0], max_iter, REAL(BIC), REAL(LAMBDA), REAL(BETAHAT));
+    iter = estimate1(REAL(Y), REAL(X), sdx, active, INTEGER(N), INTEGER(M)[0], p, REAL(Q)[0], REAL(LAMBDA2)[0], REAL(EPSILON)[0], REAL(DELTA)[0], REAL(XI)[0], max_iter, REAL(GAMMA)[0], REAL(BIC), REAL(LAMBDA), REAL(BETAHAT));
     // printf("%d\n",iter);
     INTEGER(Iter)[0] = iter;
     // SET_VECTOR_ELT(Result, 0, LAMBDA);

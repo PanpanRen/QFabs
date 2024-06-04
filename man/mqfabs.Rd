@@ -4,7 +4,7 @@
 \alias{mqfabs}
 \title{A minorization-maximization forward and backward stagewise algorithm for high-dimensional integrative quantile regression.}
 \usage{
-    mqfabs(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0.01, 
+    mqfabs(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, Lambda2_thre = 1e-3, epsilon = 0.01, 
            delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1)
 }
 \arguments{
@@ -14,6 +14,7 @@
     \item{tau}{The quantile to be estimated, this is a number strictly between 0 and 1. Default value is 0.5.}
     \item{Lambda2}{The value of the contrast penalty parameter(s) that determine how much shrinkage in different regression coefficients is done. This should be either a scalar, or a vector. If not specified then a sequence will be automatically generated based on the data.}
     \item{nlambda2}{The number of lambda2s generated. This is ignored if lambda is set manually. Default is 50.}
+    \item{Lambda2_thre}{Smallest value for lambda2, as a fraction of lambda2.max. Default is 1e-3.}
     \item{epsilon}{The step size for updating coefficients. Default is 0.01.}
     \item{delta}{A constant in pertubed loss function. Default is 1e-8.}
     \item{xi}{The threshold for mqfabs. Default is 1e-10.}

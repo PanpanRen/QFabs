@@ -34,18 +34,22 @@
 
 generator <- function(n, p, beta, distr = "gaussian", rho = 0.5){
     M = length(n)
-    N = 0
-    for(m in 1:M){
-        N = N + n[m]
+    n_alter = rep(NA, M)
+    n_alter[1] = n[1]
+    if(M!=1){
+        for(m in 1:(M-1)){
+            n_alter[m+1] = n_alter[m]+n[m+1]
+        }
     }
+    N = n_alter[M]
 
     # x
     x = matrix(NA, N, p)
     x[1:n[1],] = rmnorm(n[1], mean = rep(0, p), varcov = outer(1:p, 1:p, FUN = function(x, y) rho^(abs(x-y))))
-    if(m!=1){
+    if(M!=1){
         # x[1:n[1],] = rmnorm(n[1], mean = rep(0, p), varcov = outer(1:p, 1:p, FUN = function(x, y) rho^(abs(x - y))))
         for(m in 1:(M-1)){
-            x[(n[m]+1):(n[m]+n[m+1]),] = rmnorm(n[m+1], mean = rep(0, p), varcov = outer(1:p, 1:p, FUN = function(x, y) rho^(abs(x - y))))
+            x[(n_alter[m]+1):(n_alter[m+1]),] = rmnorm(n[m+1], mean = rep(0, p), varcov = outer(1:p, 1:p, FUN = function(x, y) rho^(abs(x - y))))
         }
     }
 
@@ -77,7 +81,7 @@ generator <- function(n, p, beta, distr = "gaussian", rho = 0.5){
     y[1:n[1]] = x[1:n[1],] %*% beta[,1] + error[[1]]
     if(m!=1){
         for(m in 1:(M-1)){
-            index = (n[m]+1):(n[m]+n[m+1])
+            index = (n_alter[m]+1):(n_alter[m+1])
             y[index] = x[index,] %*% beta[,(m+1)] + error[[m+1]]
         }
     }

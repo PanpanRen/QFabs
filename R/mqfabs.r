@@ -6,6 +6,7 @@
 #' @param tau The quantile to be estimated, this is a number strictly between 0 and 1. Default value is 0.5.
 #' @param Lambda2 The value of the contrast penalty parameter(s) that determine how much shrinkage in different regression coefficients is done. This should be either a scalar, or a vector. If not specified then a sequence will be automatically generated based on the data.
 #' @param nlambda2 The number of lambda2s generated. This is ignored if lambda is set manually. Default is 50.
+#' @param Lambda2_thre Smallest value for lambda2, as a fraction of lambda2.max. Default is 1e-3.
 #' @param epsilon The step size for updating coefficients. Default is 0.01.
 #' @param delta A constant in pertubed loss function. Default is 1e-8.
 #' @param xi The threshold for mqfabs. Default is 1e-10.
@@ -49,7 +50,7 @@
 #' n = data_logistic$n
 #' fit <- mqfabs(y, x, n)
         
-mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1){
+mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, Lambda2_thre = 1e-3, epsilon = 0.01, delta = 1e-8, xi = 1e-10, max.iter = 5000, gamma = 1){
     M = length(n)
     p = ncol(x)
     x = cbind(1, x)
@@ -67,13 +68,13 @@ mqfabs = function(y, x, n, tau = 0.5, Lambda2 = NULL, nlambda2 = 50, epsilon = 0
         y1 = y[index]
         coer[1:p] = abs(t(x1) %*% (y1 - quantile(y1, tau)))/n[1]
         for(m in 1:(M-1)){
-            index = (n[m]+1):(n[m]+n[m+1])
+            index = (n_alter[m]+1):(n_alter[m+1])
             x_1 = x[index,-1]
             y_1 = y[index]
             coer[(m*p+1):((m+1)*p)] = abs(t(x_1) %*% (y_1 - quantile(y_1, tau)))/n[m+1]
         }
         lambda2.max = max(coer)
-        lambda2.min <- lambda2.max * 1e-4 
+        lambda2.min <- lambda2.max * Lambda2_thre 
         grid.n <- nlambda2
         lambda2.grid <- exp(seq(log(lambda2.min), log(lambda2.max), length.out=grid.n))
         Lambda2 = lambda2.grid

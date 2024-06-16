@@ -15,7 +15,7 @@ You can install the qfabs package in R using the following steps:
 The detail of the usage of the package can be found in https://github.com/PanpanRen/qfabs/qfabs_package/inst/qfabs-manual.pdf.
 
 # Introduction to the simulation code
-The simulation results can be reproduced by using the code in folder simulation. The detail description can be founded in simulation/README.md.
+The simulation results can be reproduced by using the code in folder simulation. The detail description can be found in simulation/README.md.
 
 # Introduction to the real datasets and real data code
-The real datasets and real data code are provided in folder realdata. The detail description can be founded in realdata/README.md.
+The real datasets and real data code are provided in folder realdata. The detail description can be found in realdata/README.md.

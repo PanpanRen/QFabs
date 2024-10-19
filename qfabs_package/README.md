@@ -13,7 +13,7 @@ qfabs uses coordinate descent with a fixed step size which consists of both forw
 
 # Usage
 
-- [x] [qfabs-manual](https://github.com/PanpanRen/qfabs/qfabs_package/inst/qfabs-manual.pdf) ------------ Details of the usage of the package.
+- [x] [qfabs-manual](https://github.com/PanpanRen/qfabs/tree/main/qfabs_package/inst/qfabs-manual.pdf) ------------ Details of the usage of the package.
 
 # Example
 

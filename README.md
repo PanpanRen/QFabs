@@ -12,7 +12,7 @@ You can install the qfabs package in R using the following steps:
     install_github("PanpanRen/qfabs/qfabs_package")
 
 ## Usage
-The detail of the usage of the package can be found in https://github.com/PanpanRen/qfabs/qfabs_package/inst/qfabs-manual.pdf.
+The detail of the usage of the package can be found in https://github.com/PanpanRen/qfabs/tree/main/qfabs_package/inst/qfabs-manual.pdf.
 
 # Introduction to the simulation code
 The simulation results can be reproduced by using the code in folder simulation. The detail description can be found in simulation/README.md.
